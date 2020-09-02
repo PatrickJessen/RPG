@@ -33,7 +33,7 @@ namespace RPG
         public override void UpdateStats()
         {
             Damage = Dexterity * 1.5 + Energy;
-            Life = Vitality * 2;
+            Life = Vitality * 5;
             Hitrate = Dexterity * 1.5 + Strength;
         }
     }
