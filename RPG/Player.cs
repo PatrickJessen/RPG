@@ -18,10 +18,6 @@ namespace RPG
         public string Name { get; set;  }
         public int Level { get; set; }
 
-        public Player()
-        {
-        
-        }
 
         public abstract void LevelUp();
 

@@ -12,6 +12,9 @@ namespace RPG
 {
     class GUI
     {
+        private int whatBossAWeOn = 1;
+        private int BossesWeKilled = 0;
+        Bosses[] bossArray = new Bosses[5];
         Bosses Andarial = new Bosses("Andarial", 5, 5);
         Bosses Duriel = new Bosses("Duriel", 5, 5);
         Bosses Mephisto = new Bosses("Mephisto", 150, 120);
@@ -34,11 +37,21 @@ namespace RPG
         string userInput;
         public void StartStory()
         {
+            AddBossesToList();
             StartScreen();
             Console.ReadKey();
             Console.Clear();
             CharacterSelection();
             Console.ReadKey();
+        }
+
+        private void AddBossesToList()
+        {
+            bossArray[0] = Andarial;
+            bossArray[1] = Duriel;
+            bossArray[2] = Mephisto;
+            bossArray[3] = Diablo;
+            bossArray[4] = Baal;
         }
 
         private void AddPlayersToList()
@@ -75,31 +88,31 @@ namespace RPG
             {
                 case "sorceress":
                     Console.WriteLine("You have chosen the Sorceress");
-                    Story(Sorceress);
+                    MainMenuGraphic(Sorceress);
                     break;
                 case "paladin":
                     Console.WriteLine("You have chosen the Paladin");
-                    Story(Paladin);
+                    MainMenuGraphic(Paladin);
                     break;
                 case "barbarian":
                     Console.WriteLine("You have chosen the Barbarian");
-                    Story(Barbarian);
+                    MainMenuGraphic(Barbarian);
                     break;
                 case "amazon":
                     Console.WriteLine("You have chosen the Amazon");
-                    Story(Amazon);
+                    MainMenuGraphic(Amazon);
                     break;
                 case "assassin":
                     Console.WriteLine("You have chosen the Assassin");
-                    Story(Assassin);
+                    MainMenuGraphic(Assassin);
                     break;
                 case "necromancer":
                     Console.WriteLine("You have chosen the Necromancer");
-                    Story(Necromancer);
+                    MainMenuGraphic(Necromancer);
                     break;
                 case "druid":
                     Console.WriteLine("You have chosen the Druid");
-                    Story(Druid);
+                    MainMenuGraphic(Druid);
                     break;
                 default:
                     Console.WriteLine("Wrong input! Check your spelling.");
@@ -109,7 +122,7 @@ namespace RPG
             }
         }
 
-        private void MainMenuGraphic(Player player, Bosses boss)
+        private void MainMenuGraphic(Player player)
         {
             Console.Clear();
             Console.WriteLine("################################################################");
@@ -134,35 +147,34 @@ namespace RPG
                 case "2":
                     Console.Clear();
                     Console.WriteLine("Press any key to start the fight!");
-                    if (boss.Life > 0)
-                    {
-                        BossFight(player, boss);
-                    }
+                    Story(player);
                     break;
                 case "3":
                     Console.Clear();
                     Console.WriteLine(player.PrintStats());
                     Console.WriteLine("Press b to get back to menu!");
                     Console.ReadKey();
-                    BackToMenu(player, boss);
+                    BackToMenu(player);
                     break;
                 case "4":
                     DrawInventory();
                     Console.ReadLine();
                     Console.WriteLine("Press b to get back to menu!");
-                    BackToMenu(player, boss);
+                    BackToMenu(player);
                     break;
                 case "5":
                     DrawShop();
                     Console.ReadLine();
                     Console.WriteLine("Press b to get back to menu!");
-                    BackToMenu(player, boss);
+                    BackToMenu(player);
                     break;
                 default:
                     Console.WriteLine("Wrong input! Check your spelling!");
+                    BackToMenu(player);
                     break;
             }
         }
+
 
         private void DrawInventory()
         {
@@ -196,7 +208,7 @@ namespace RPG
             Console.WriteLine("################################################################");
         }
 
-        private void BackToMenu(Player player, Bosses boss)
+        private void BackToMenu(Player player)
         {
             if (Console.KeyAvailable)
             {
@@ -205,26 +217,24 @@ namespace RPG
             }
             if (key == 'b')
             {
-                MainMenuGraphic(player, boss);
+                MainMenuGraphic(player);
             }
         }
 
         private void Story(Player player)
         {
+            for (int i = BossesWeKilled; i < whatBossAWeOn; i++)
+            {
+                Console.WriteLine(myStory.ReadMyStory("Story" + whatBossAWeOn));
+                BossFight(player, bossArray[i]);
+            }
+            whatBossAWeOn++;
+            BossesWeKilled++;
             Console.ReadKey();
-            Console.Clear();
-            Console.WriteLine(myStory.ReadMyStory("Story1"));
-            MainMenuGraphic(player, Andarial);
-            Console.WriteLine(myStory.ReadMyStory("Story2"));
-            MainMenuGraphic(player, Duriel);
-            Console.WriteLine(myStory.ReadMyStory("Story3"));
-            MainMenuGraphic(player, Mephisto);
-            Console.WriteLine(myStory.ReadMyStory("Story4"));
-            MainMenuGraphic(player, Diablo);
-            Console.WriteLine(myStory.ReadMyStory("Story5"));
-            MainMenuGraphic(player, Baal);
-            Console.WriteLine(myStory.ReadMyStory("Story6"));
+            BackToMenu(player);
+
         }
+
 
         private string BossFight(Player player, Bosses boss)
         {
@@ -241,9 +251,9 @@ namespace RPG
                 {
                     Console.WriteLine($"{boss.Name} Won the fight! Game over! Better go get some more levels!");
                     Console.ReadLine();
-                    BackToMenu(player, boss);
-                    break;
+                    return boss.Name;
                 }
+
                 temp = player.Damage;
                 boss.Life -= temp;
                 Console.WriteLine($"{player.Name} hit {boss.Name} for {temp}");
@@ -258,8 +268,7 @@ namespace RPG
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine(player.PrintStats());
                     Console.ReadLine();
-                    BackToMenu(player, boss);
-                    break;
+                    return player.Name;
                 }
             }
             return null;

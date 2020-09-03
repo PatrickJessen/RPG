@@ -1,29 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RPG
 {
-    class Bosses
+    class Bosses : Enemy
     {
-        public string Name { get; set; }
-        private int dmg;
-
-        public int Dmg
-        {
-            get { return rand.Next(5 + dmg, 40 + dmg); }
-            set { dmg = value; }
-        }
-
-        public double Life { get; set; }
         Random rand = new Random();
+
         public Bosses(string name, int dmg, int life)
         {
             Name = name;
-            Dmg = dmg;
+            Dmg = RandomDamage(dmg);
             Life = life;
+        }
+
+
+        public int RandomDamage(int dmg)
+        {
+            dmg = rand.Next(5 + dmg, 40 + dmg);
+            return dmg;
         }
     }
 }

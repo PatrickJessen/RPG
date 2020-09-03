@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RPG.ItemSystem;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace RPG
     {
         static void Main(string[] args)
         {
+            Enemy boss = new Bosses("test", 150, 100);
+            Console.WriteLine(boss.Dmg);
             GUI gui = new GUI();
             gui.StartStory();
         }
