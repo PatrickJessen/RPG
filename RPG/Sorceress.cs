@@ -15,6 +15,7 @@ namespace RPG
             Vitality = 10;
             Energy = 35;
             Level = 1;
+            Gold = 0;
 
             Name = "Sorceress";
 

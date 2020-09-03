@@ -15,6 +15,7 @@ namespace RPG
             Vitality = 15;
             Energy = 25;
             Level = 1;
+            Gold = 0;
 
             Name = "Necromancer";
 

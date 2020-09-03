@@ -17,7 +17,7 @@ namespace RPG
         public double Damage { get; set; }
         public string Name { get; set;  }
         public int Level { get; set; }
-
+        public int Gold { get; set; }
 
         public abstract void LevelUp();
 
@@ -25,7 +25,7 @@ namespace RPG
             
         public string PrintStats()
         {
-            return $"Name: {Name}\nLevel: {Level}\nLife: {Life}\nStrength: {Strength}\nDexterity: {Dexterity}\nVitality: {Vitality}\nEnergy: {Energy}\nDamage: {Damage}";
+            return $"Name: {Name}\nLevel: {Level}\nLife: {Life}\nStrength: {Strength}\nDexterity: {Dexterity}\nVitality: {Vitality}\nEnergy: {Energy}\nDamage: {Damage}\n {Gold}";
         }
     }
 }

@@ -15,6 +15,7 @@ namespace RPG
             Vitality = 25;
             Energy = 20;
             Level = 1;
+            Gold = 0;
 
             Name = "Druid";
 

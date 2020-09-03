@@ -15,6 +15,7 @@ namespace RPG
             Vitality = 20;
             Energy = 15;
             Level = 1;
+            Gold = 0;
 
             Name = "Amazon";
 
