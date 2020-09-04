@@ -16,6 +16,7 @@ namespace RPG
             Energy = 15;
             Level = 1;
             Gold = 0;
+            MyQuest.QuestStory = 1;
 
             Name = "Amazon";
 

@@ -18,6 +18,14 @@ namespace RPG
         public string Name { get; set;  }
         public int Level { get; set; }
         public int Gold { get; set; }
+        private Quest myQuest;
+
+        public Quest MyQuest
+        {
+            get { return myQuest; }
+            set { myQuest = value; }
+        }
+
 
         public abstract void LevelUp();
 
@@ -25,7 +33,7 @@ namespace RPG
             
         public string PrintStats()
         {
-            return $"Name: {Name}\nLevel: {Level}\nLife: {Life}\nStrength: {Strength}\nDexterity: {Dexterity}\nVitality: {Vitality}\nEnergy: {Energy}\nDamage: {Damage}\n {Gold}";
+            return $"Name: {Name}\nLevel: {Level}\nLife: {Life}\nStrength: {Strength}\nDexterity: {Dexterity}\nVitality: {Vitality}\nEnergy: {Energy}\nDamage: {Damage}\nGold: {Gold}";
         }
     }
 }

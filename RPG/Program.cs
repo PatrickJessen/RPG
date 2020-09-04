@@ -11,8 +11,6 @@ namespace RPG
     {
         static void Main(string[] args)
         {
-            Enemy boss = new Bosses("test", 150, 100);
-            Console.WriteLine(boss.Dmg);
             GUI gui = new GUI();
             gui.StartStory();
         }

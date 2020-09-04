@@ -12,8 +12,6 @@ namespace RPG
 {
     class GUI
     {
-        private int whatBossAWeOn = 1;
-        private int BossesWeKilled = 0;
         Bosses[] bossArray = new Bosses[5];
         Bosses Andarial = new Bosses("Andarial", 5, 5);
         Bosses Duriel = new Bosses("Duriel", 5, 5);
@@ -30,6 +28,8 @@ namespace RPG
         List<Player> playerList = new List<Player>();
 
         ReadStory myStory = new ReadStory();
+
+        Campaign camp = new Campaign();
 
         ConsoleKeyInfo keyPress = new ConsoleKeyInfo();
 
@@ -135,7 +135,9 @@ namespace RPG
             Console.WriteLine("#                                                              #");
             Console.WriteLine($"# 4. {player.Name} Inventory                                   #");
             Console.WriteLine("#                                                              #");
-            Console.WriteLine($"# 5. {player.Name} Shop                                       #");
+            Console.WriteLine("# 5. Item Shop                                                 #");
+            Console.WriteLine("#                                                              #");
+            Console.WriteLine($"# 6. Heal {player.Name}                                       #");
             Console.WriteLine("################################################################");
 
             userInput = Console.ReadLine();
@@ -164,6 +166,12 @@ namespace RPG
                     break;
                 case "5":
                     DrawShop();
+                    Console.ReadLine();
+                    Console.WriteLine("Press b to get back to menu!");
+                    BackToMenu(player);
+                    break;
+                case "6":
+                    camp.HealPlayer(player);
                     Console.ReadLine();
                     Console.WriteLine("Press b to get back to menu!");
                     BackToMenu(player);
@@ -223,20 +231,20 @@ namespace RPG
 
         private void Story(Player player)
         {
-            for (int i = BossesWeKilled; i < whatBossAWeOn; i++)
+            for (int i = 0; i < player.MyQuest.QuestStory; i++)
             {
-                Console.WriteLine(myStory.ReadMyStory("Story" + whatBossAWeOn));
-                BossFight(player, bossArray[i]);
+                if (player.Life > 0)
+                {
+                    Console.WriteLine(myStory.ReadMyStory("Story" + player.MyQuest.QuestStory));
+                    player.MyQuest.QuestStory += BossFight(player, bossArray[player.MyQuest.QuestStory +1]);
+                    Console.ReadKey();
+                    BackToMenu(player);
+                }
             }
-            whatBossAWeOn++;
-            BossesWeKilled++;
-            Console.ReadKey();
-            BackToMenu(player);
-
         }
 
 
-        private string BossFight(Player player, Bosses boss)
+        private int BossFight(Player player, Bosses boss)
         {
             double temp;
             while (player.Life > 0 || boss.Life > 0)
@@ -251,7 +259,8 @@ namespace RPG
                 {
                     Console.WriteLine($"{boss.Name} Won the fight! Game over! Better go get some more levels!");
                     Console.ReadLine();
-                    return boss.Name;
+                    player.Life = 0;
+                    return 0;
                 }
 
                 temp = player.Damage;
@@ -268,10 +277,10 @@ namespace RPG
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine(player.PrintStats());
                     Console.ReadLine();
-                    return player.Name;
+                    return 1;
                 }
             }
-            return null;
+            return 0;
         }
     }
 }
