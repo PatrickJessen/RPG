@@ -15,6 +15,8 @@ namespace RPG
             Vitality = 20;
             Energy = 25;
             Level = 1;
+            Experience = 0;
+            ExpToLevelUp = Level * 75;
             Gold = 0;
             MyQuest.QuestStory = 1;
 
@@ -30,6 +32,7 @@ namespace RPG
             Vitality += 1;
             Energy += 1;
             Level += 1;
+            Gold += 1000;
             UpdateStats();
         }
 

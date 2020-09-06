@@ -23,7 +23,7 @@ namespace RPG.ItemSystem
 
         public override void Randomize()
         {
-            if (ILevel == 1)
+            if (ILevel == 1) //skal laves til en switch statement istedet
             {
                 Vitality = rand.Next(1, 5);
                 Dexterity = rand.Next(1, 5);

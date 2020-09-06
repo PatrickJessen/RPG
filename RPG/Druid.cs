@@ -15,6 +15,8 @@ namespace RPG
             Vitality = 25;
             Energy = 20;
             Level = 1;
+            Experience = 0;
+            //ExpToLevelUp = 75 * Level;
             Gold = 0;
             MyQuest.QuestStory = 1;
 
@@ -29,13 +31,14 @@ namespace RPG
             Vitality += 2;
             Energy += 1;
             Level += 1;
+            Gold += 1000;
             UpdateStats();
         }
 
         public override void UpdateStats()
         {
             Damage = Dexterity * 1.5 + Energy;
-            Life = Vitality * 5;
+            Life = Vitality * 1.5;
             Hitrate = Dexterity * 1.5 + Strength;
         }
     }

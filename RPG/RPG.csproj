@@ -58,6 +58,7 @@
     <Compile Include="Campaign.cs" />
     <Compile Include="Druid.cs" />
     <Compile Include="Enemy.cs" />
+    <Compile Include="ExpSystem.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="ItemSystem\Amulets.cs" />
     <Compile Include="ItemSystem\Armor.cs" />

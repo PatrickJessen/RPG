@@ -17,9 +17,11 @@ namespace RPG
         public double Damage { get; set; }
         public string Name { get; set;  }
         public int Level { get; set; }
+        public double Experience { get; set; }
+        public int ExpToLevelUp { get; set; }
         public int Gold { get; set; }
-        private Quest myQuest;
 
+        public Quest myQuest = new Quest();
         public Quest MyQuest
         {
             get { return myQuest; }
@@ -33,7 +35,7 @@ namespace RPG
             
         public string PrintStats()
         {
-            return $"Name: {Name}\nLevel: {Level}\nLife: {Life}\nStrength: {Strength}\nDexterity: {Dexterity}\nVitality: {Vitality}\nEnergy: {Energy}\nDamage: {Damage}\nGold: {Gold}";
+            return $"Name: {Name}\nLevel: {Level}\nLife: {Life}\nStrength: {Strength}\nDexterity: {Dexterity}\nVitality: {Vitality}\nEnergy: {Energy}\nDamage: {Damage}\nExperience: {Experience}\nExp to next level: {ExpToLevelUp}\nGold: {Gold}";
         }
     }
 }

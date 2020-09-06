@@ -15,9 +15,9 @@ namespace RPG
         Bosses[] bossArray = new Bosses[5];
         Bosses Andarial = new Bosses("Andarial", 5, 5);
         Bosses Duriel = new Bosses("Duriel", 5, 5);
-        Bosses Mephisto = new Bosses("Mephisto", 150, 120);
-        Bosses Diablo = new Bosses("Diablo", 300, 400);
-        Bosses Baal = new Bosses("Baal", 500, 700);
+        Bosses Mephisto = new Bosses("Mephisto", 5, 5);
+        Bosses Diablo = new Bosses("Diablo", 5, 5);
+        Bosses Baal = new Bosses("Baal", 5, 5);
         Player Druid = new Druid();
         Player Sorceress = new Sorceress();
         Player Paladin = new Paladin();
@@ -27,9 +27,52 @@ namespace RPG
         Player Necromancer = new Necromancer();
         List<Player> playerList = new List<Player>();
 
+        string[] randomNames = new string[]
+        {
+            "Fallen",
+            "Skeleton",
+            "Zombie",
+            "Rakanishu",
+            "Fallen Shaman",
+            "Corrupt Rogue",
+            "Goatmen",
+            "Vampire",
+            "Claw Viper",
+            "Megademon",
+            "Oblivion Knight",
+            "Abominable",
+            "Blood Lord",
+            "Corpsefire",
+            "Bishibosh",
+            "Coldcrow",
+            "Blood Raven",
+            "Bonebreaker",
+            "Treehead Woodfist",
+            "Griswold",
+            "The Countess",
+            "Pitspawn Fouldog",
+            "Bone Ash",
+            "The Smith",
+            "The Cow King",
+            "The Summoner",
+            "Ismail Vilehand",
+            "Toorc Icefist",
+            "Izual",
+            "Hephasto the Armorer",
+            "Grand Vizier of Chaos",
+            "Infector of Souls",
+            "Lord De Seis",
+            "Nihlathak",
+            "Korlic",
+            "Madawc",
+            "Talic"
+        };
+
         ReadStory myStory = new ReadStory();
 
         Campaign camp = new Campaign();
+
+        ExpSystem exp = new ExpSystem();
 
         ConsoleKeyInfo keyPress = new ConsoleKeyInfo();
 
@@ -117,6 +160,7 @@ namespace RPG
                 default:
                     Console.WriteLine("Wrong input! Check your spelling.");
                     Console.ReadKey();
+                    Console.Clear();
                     CharacterSelection();
                     break;
             }
@@ -145,6 +189,10 @@ namespace RPG
             switch (userInput)
             {
                 case "1":
+                    Console.Clear();
+                    Console.WriteLine("Press any key to start the fight!");
+                    FightRandomMob(player);
+                    BackToMenu(player);
                     break;
                 case "2":
                     Console.Clear();
@@ -236,7 +284,7 @@ namespace RPG
                 if (player.Life > 0)
                 {
                     Console.WriteLine(myStory.ReadMyStory("Story" + player.MyQuest.QuestStory));
-                    player.MyQuest.QuestStory += BossFight(player, bossArray[player.MyQuest.QuestStory +1]);
+                    player.MyQuest.QuestStory += BossFight(player, bossArray[player.MyQuest.QuestStory++ -1]);
                     Console.ReadKey();
                     BackToMenu(player);
                 }
@@ -271,16 +319,53 @@ namespace RPG
                 if (boss.Life <= 0)
                 {
                     Console.WriteLine($"{player.Name} Won the fight!");
-                    player.LevelUp();
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Level Up!");
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine(player.PrintStats());
+                    player.ExpToLevelUp = exp.ExpNeededForLevel(player);
+                    player.Experience += player.Level * player.MyQuest.QuestStory * 5;
+                    Console.WriteLine(player.Experience);
+                    exp.LevelingUp(player);
                     Console.ReadLine();
                     return 1;
                 }
             }
             return 0;
+        }
+
+        private void FightRandomMob(Player player)
+        {
+            Random rand = new Random();
+            Bosses randomMobs = new Bosses(randomNames[rand.Next(0, randomNames.Length)], player.MyQuest.QuestStory + 5 * 3, player.MyQuest.QuestStory + 3 * 3);
+            double temp;
+            while (player.Life > 0 || randomMobs.Life > 0)
+            {
+                Console.ReadLine();
+                temp = randomMobs.Dmg;
+                player.Life -= temp;
+                Console.WriteLine($"{randomMobs.Name} hit {player.Name} for {temp}");
+                Console.WriteLine($"{player.Name} life is currently at: {player.Life}");
+                Console.ReadLine();
+                if (player.Life <= 0)
+                {
+                    Console.WriteLine($"{randomMobs.Name} won the fight! better heal up and get some better gear!");
+                    Console.ReadLine();
+                    player.Life = 0;
+                }
+
+                temp = player.Damage;
+                randomMobs.Life -= temp;
+                Console.WriteLine($"{player.Name} hit {randomMobs.Name} for {temp}");
+                Console.WriteLine($"{randomMobs.Name} life is currently at: {randomMobs.Life}");
+
+                if (randomMobs.Life <= 0)
+                {
+                    Console.WriteLine($"{player.Name} Won the fight!");
+                    player.ExpToLevelUp = exp.ExpNeededForLevel(player);
+                    player.Experience += player.Level * player.MyQuest.QuestStory * 3;
+                    exp.LevelingUp(player);
+                    Console.WriteLine($"{player.Name} gained {player.Experience} exp");
+                    Console.ReadLine();
+                    BackToMenu(player);
+                }
+            }
         }
     }
 }
