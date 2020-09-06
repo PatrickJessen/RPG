@@ -12,8 +12,8 @@ namespace RPG
 {
     class ReadStory
     {
-        string path = @"StoryFile.json";
-        string json = File.ReadAllText(@"StoryFile.json");
+        const string path = @"StoryFile.json";
+        string json = File.ReadAllText(path);
         public void CreateJson()
         {
             MyStory story = new MyStory();

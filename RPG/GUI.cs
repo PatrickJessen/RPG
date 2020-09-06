@@ -3,6 +3,7 @@ using Newtonsoft.Json.Bson;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -169,20 +170,20 @@ namespace RPG
         private void MainMenuGraphic(Player player)
         {
             Console.Clear();
-            Console.WriteLine("################################################################");
-            Console.WriteLine("#                         MAIN MENU                            #");
-            Console.WriteLine("# 1. Fight mobs                                                #");
-            Console.WriteLine("#                                                              #");
-            Console.WriteLine("# 2. Fight next boss                                           #");
-            Console.WriteLine("#                                                              #");
-            Console.WriteLine($"# 3. {player.Name} Stats                                       #");
-            Console.WriteLine("#                                                              #");
-            Console.WriteLine($"# 4. {player.Name} Inventory                                   #");
-            Console.WriteLine("#                                                              #");
-            Console.WriteLine("# 5. Item Shop                                                 #");
-            Console.WriteLine("#                                                              #");
-            Console.WriteLine($"# 6. Heal {player.Name}                                       #");
-            Console.WriteLine("################################################################");
+            Console.WriteLine(GUIFunctions.SquaregAlign());
+            Console.WriteLine($"#   {GUIFunctions.StringAlign("")}#");
+            Console.WriteLine($"# 1.{GUIFunctions.StringAlign("Fight Mobs")}#");
+            Console.WriteLine($"#   {GUIFunctions.StringAlign("")}#");
+            Console.WriteLine($"# 2.{GUIFunctions.StringAlign("Fight Next Boss")}#");
+            Console.WriteLine($"#   {GUIFunctions.StringAlign("")}#");
+            Console.WriteLine($"# 3.{GUIFunctions.StringAlign(player.Name + " Stats")}#");
+            Console.WriteLine($"#   {GUIFunctions.StringAlign("")}#");
+            Console.WriteLine($"# 4.{GUIFunctions.StringAlign(player.Name + " Inventory")}#");
+            Console.WriteLine($"#   {GUIFunctions.StringAlign("")}#");
+            Console.WriteLine($"# 5.{GUIFunctions.StringAlign("Item Shop")}#");
+            Console.WriteLine($"#   {GUIFunctions.StringAlign("")}#");
+            Console.WriteLine($"# 6.{GUIFunctions.StringAlign("Heal " + player.Name)}#");
+            Console.WriteLine(GUIFunctions.SquaregAlign());
 
             userInput = Console.ReadLine();
 
@@ -235,9 +236,9 @@ namespace RPG
         private void DrawInventory()
         {
             Console.Clear();
-            Console.WriteLine("################################################################");
-            Console.WriteLine("#                         INVENTORY                            #");
-            Console.WriteLine("#                          Headgear                            #");
+            Console.WriteLine(GUIFunctions.SquaregAlign());
+            Console.WriteLine($"#{GUIFunctions.StringAlign("INVENTORY", 25)}#");
+            Console.WriteLine($"#{GUIFunctions.StringAlign("Headgear", 26)}#");
             Console.WriteLine("#                                        Amulet                #");
             Console.WriteLine("#               Weapon                  Shield                 #");
             Console.WriteLine("#                         Chest Armor                          #");
@@ -245,7 +246,7 @@ namespace RPG
             Console.WriteLine("#                 Gloves     Belt                              #");
             Console.WriteLine("#                            Boots                             #");
             Console.WriteLine("#                                                              #");
-            Console.WriteLine("################################################################");
+            Console.WriteLine(GUIFunctions.SquaregAlign());
         }
 
         private void DrawShop()
@@ -333,29 +334,31 @@ namespace RPG
         private void FightRandomMob(Player player)
         {
             Random rand = new Random();
-            Bosses randomMobs = new Bosses(randomNames[rand.Next(0, randomNames.Length)], player.MyQuest.QuestStory + 5 * 3, player.MyQuest.QuestStory + 3 * 3);
+            Bosses randomMob = new Bosses(randomNames[rand.Next(0, randomNames.Length)], player.MyQuest.QuestStory + 5 * 3, player.MyQuest.QuestStory + 3 * 3);
             double temp;
-            while (player.Life > 0 || randomMobs.Life > 0)
+            while (player.Life > 0)
             {
                 Console.ReadLine();
-                temp = randomMobs.Dmg;
+                temp = randomMob.Dmg;
                 player.Life -= temp;
-                Console.WriteLine($"{randomMobs.Name} hit {player.Name} for {temp}");
+                Console.WriteLine($"{randomMob.Name} hit {player.Name} for {temp}");
                 Console.WriteLine($"{player.Name} life is currently at: {player.Life}");
                 Console.ReadLine();
                 if (player.Life <= 0)
                 {
-                    Console.WriteLine($"{randomMobs.Name} won the fight! better heal up and get some better gear!");
+                    Console.WriteLine($"{randomMob.Name} won the fight! better heal up and get some better gear!");
                     Console.ReadLine();
                     player.Life = 0;
+                    BackToMenu(player);
+                    break;
                 }
 
                 temp = player.Damage;
-                randomMobs.Life -= temp;
-                Console.WriteLine($"{player.Name} hit {randomMobs.Name} for {temp}");
-                Console.WriteLine($"{randomMobs.Name} life is currently at: {randomMobs.Life}");
+                randomMob.Life -= temp;
+                Console.WriteLine($"{player.Name} hit {randomMob.Name} for {temp}");
+                Console.WriteLine($"{randomMob.Name} life is currently at: {randomMob.Life}");
 
-                if (randomMobs.Life <= 0)
+                if (randomMob.Life <= 0)
                 {
                     Console.WriteLine($"{player.Name} Won the fight!");
                     player.ExpToLevelUp = exp.ExpNeededForLevel(player);
@@ -364,6 +367,7 @@ namespace RPG
                     Console.WriteLine($"{player.Name} gained {player.Experience} exp");
                     Console.ReadLine();
                     BackToMenu(player);
+                    break;
                 }
             }
         }

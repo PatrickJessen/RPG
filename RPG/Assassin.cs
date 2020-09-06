@@ -27,8 +27,8 @@ namespace RPG
 
         public override void LevelUp()
         {
-            Strength += 1;
-            Dexterity += 2;
+            Strength += (Level % 2 == 1 ? 2 : 1);
+            Dexterity += (Level % 2 == 0 ? 2 : 1);
             Vitality += 1;
             Energy += 1;
             Level += 1;
@@ -38,9 +38,9 @@ namespace RPG
 
         public override void UpdateStats()
         {
-            Damage = Dexterity * 1.5 + Energy;
+            Damage = Dexterity * (1.5 + Energy);
             Life = Vitality * 1.5;
-            Hitrate = Dexterity * 1.5 + Strength;
+            Hitrate = Dexterity * (1.5 + Strength);
         }
     }
 }

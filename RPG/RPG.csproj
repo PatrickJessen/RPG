@@ -60,6 +60,7 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="ExpSystem.cs" />
     <Compile Include="GUI.cs" />
+    <Compile Include="GUIFunctions.cs" />
     <Compile Include="ItemSystem\Amulets.cs" />
     <Compile Include="ItemSystem\Armor.cs" />
     <Compile Include="ItemSystem\Belts.cs" />

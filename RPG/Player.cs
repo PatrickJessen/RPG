@@ -30,7 +30,7 @@ namespace RPG
 
 
         public abstract void LevelUp();
-
+            
         public abstract void UpdateStats();
             
         public string PrintStats()
