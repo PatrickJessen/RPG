@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace RPG.ItemSystem
 {
-    class Boots
+    class Boots : Armor
     {
+        public Boots(string name, int iLevel) : base(name, iLevel)
+        {
+        }
     }
 }

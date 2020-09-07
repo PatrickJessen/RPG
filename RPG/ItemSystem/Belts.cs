@@ -9,13 +9,9 @@ namespace RPG.ItemSystem
     class Belts : Armor
     {
 
-        public Belts(string name, int iLevel, double defense, int life) : base(name, iLevel, defense, life)
+        public Belts(string name, int iLevel) : base(name, iLevel)
         {
 
-        }
-        public override void Randomize()
-        {
-            throw new NotImplementedException();
         }
     }
 }

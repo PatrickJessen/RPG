@@ -29,9 +29,9 @@ namespace RPG
             {
                 space[i] = ' ';
             }
-            for (int i = 0, j = num; i < text.Length; i++, j++)
+            for (int i = 0; i < text.Length; i++)
             {
-                space[j] = text[i];
+                space[i + num] = text[i];
             }
             return new string(space);
         }

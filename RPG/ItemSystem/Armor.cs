@@ -25,15 +25,45 @@ namespace RPG.ItemSystem
         }
 
 
-        public Armor(string name, int iLevel, double defense, int life) : base(name, iLevel)
+        public Armor(string name, int iLevel) : base(name, iLevel)
         {
             Defense = defense;
             Life = life;
+            Randomize(iLevel);
         }
 
-        public override void Randomize()
+        public override void Randomize(int iLevel)
         {
-            throw new NotImplementedException();
+            Random rand = new Random();
+            switch (ILevel)
+            {
+                case 1:
+                    Defense = rand.Next(3, 9);
+                    Life = rand.Next(3, 9);
+                    break;
+                case 2:
+                    Defense = rand.Next(10, 17);
+                    Life = rand.Next(10, 17);
+                    break;
+                case 3:
+                    Defense = rand.Next(17, 25);
+                    Life = rand.Next(17, 25);
+                    break;
+                case 4:
+                    Defense = rand.Next(25, 35);
+                    Life = rand.Next(25, 35);
+                    break;
+                case 5:
+                    Defense = rand.Next(35, 50);
+                    Life = rand.Next(35, 50);
+                    break;
+                case 6:
+                    Defense = rand.Next(50, 70);
+                    Life = rand.Next(50, 70);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

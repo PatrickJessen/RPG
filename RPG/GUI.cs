@@ -14,7 +14,7 @@ namespace RPG
     class GUI
     {
         Bosses[] bossArray = new Bosses[5];
-        Bosses Andarial = new Bosses("Andarial", 5, 5);
+        Bosses Andariel = new Bosses("Andariel", 5, 5);
         Bosses Duriel = new Bosses("Duriel", 5, 5);
         Bosses Mephisto = new Bosses("Mephisto", 5, 5);
         Bosses Diablo = new Bosses("Diablo", 5, 5);
@@ -69,6 +69,105 @@ namespace RPG
             "Talic"
         };
 
+        string[] helmNames = new string[]
+        {
+            "Shako",
+            "Andariel's Visage",
+            "Lore",
+            "Valkyrie Wing",
+            "Blackhorn's Face",
+            "Vampire Gaze",
+            "Crown of Ages"
+        };
+
+        string[] amuletNames = new string[]
+        {
+            "Mara's Kaleidoscope",
+            "Metalgrid",
+            "Highlord's Wraith",
+            "The Rising Sun",
+            "Crescent Moon",
+            "Nokozan Relic",
+            "The cat's Eye"
+        };
+
+        string[] chestNames = new string[]
+        {
+            "The Spirit Shroud",
+            "Skin of the Vipermagi",
+            "Duriel's Shell",
+            "Shaftstop",
+            "Tyrael's Might",
+            "Arkaine's Valor",
+            "Leviathan"
+        };
+
+        string[] ringNames = new string[]
+        {
+            "The Stone of Jordan",
+            "Bul-Kathos' Wedding Band",
+            "Raven Frost",
+            "Manald Heal",
+            "Nagelring",
+            "Dwarf Star",
+            "Whisp Projector"
+        };
+
+        string[] weaponNames = new string[]
+        {
+            "Lightsabre",
+            "Azurewrath",
+            "Frostwind",
+            "Bloodmoon",
+            "Djinn Slayer",
+            "Headstriker",
+            "Blade of Ali Baba"
+        };
+
+        string[] glovesNames = new string[]
+        {
+            "Bloodfist",
+            "Chance Guards",
+            "Magefist",
+            "Frostburn",
+            "Dracul's Grasp",
+            "Soul Drainer",
+            "Steelrend"
+        };
+
+        string[] bootsNames = new string[]
+        {
+            "Waterwalk",
+            "War Traveler",
+            "Gorerider",
+            "Sandstorm Trek",
+            "Marrowwalk",
+            "Shadow Dancer",
+            "Hotspur"
+        };
+
+        string[] shieldNames = new string[]
+        {
+            "Steelclash",
+            "Moser's Blessed",
+            "Lidless Wall",
+            "Stormshield",
+            "Lance Guard",
+            "The Ward",
+            "Stormguild"
+        };
+
+        string[] beltNames = new string[]
+        {
+            "String of Ears",
+            "Arachnid Mesh",
+            "Nosferatu's Coil",
+            "Verdungo's Hearty Cord",
+            "Razortail",
+            "Goldwrap",
+            "Snakecord"
+        };
+
         ReadStory myStory = new ReadStory();
 
         Campaign camp = new Campaign();
@@ -91,7 +190,7 @@ namespace RPG
 
         private void AddBossesToList()
         {
-            bossArray[0] = Andarial;
+            bossArray[0] = Andariel;
             bossArray[1] = Duriel;
             bossArray[2] = Mephisto;
             bossArray[3] = Diablo;
@@ -280,12 +379,14 @@ namespace RPG
 
         private void Story(Player player)
         {
+            Random rand = new Random();
             for (int i = 0; i < player.MyQuest.QuestStory; i++)
             {
                 if (player.Life > 0)
                 {
                     Console.WriteLine(myStory.ReadMyStory("Story" + player.MyQuest.QuestStory));
                     player.MyQuest.QuestStory += BossFight(player, bossArray[player.MyQuest.QuestStory++ -1]);
+
                     Console.ReadKey();
                     BackToMenu(player);
                 }
@@ -361,6 +462,7 @@ namespace RPG
                 if (randomMob.Life <= 0)
                 {
                     Console.WriteLine($"{player.Name} Won the fight!");
+                    Console.WriteLine(camp.CallRandItem(player.myQuest.QuestStory));
                     player.ExpToLevelUp = exp.ExpNeededForLevel(player);
                     player.Experience += player.Level * player.MyQuest.QuestStory * 3;
                     exp.LevelingUp(player);

@@ -7,13 +7,10 @@ using System.Threading.Tasks;
 
 namespace RPG
 {
-    class Program
+    class ChestPlate : Armor
     {
-        static void Main(string[] args)
+        public ChestPlate(string name, int iLevel) : base(name, iLevel)
         {
-            GUI gui = new GUI();
-            gui.StartStory();
-            
         }
     }
 }

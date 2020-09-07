@@ -12,6 +12,6 @@ namespace RPG.ItemSystem
         {
         }
 
-        public abstract void Randomize();
+        public abstract void Randomize(int iLevel);
     }
 }

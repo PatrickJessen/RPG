@@ -56,6 +56,7 @@
     <Compile Include="Assassin.cs" />
     <Compile Include="Barbarian.cs" />
     <Compile Include="Campaign.cs" />
+    <Compile Include="ChestPlate.cs" />
     <Compile Include="Druid.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="ExpSystem.cs" />
