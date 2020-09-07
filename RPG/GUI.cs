@@ -191,7 +191,7 @@ namespace RPG
             {
                 case "1":
                     Console.Clear();
-                    Console.WriteLine("Press any key to start the fight!");
+                    Console.WriteLine("Press any key to start the fight!\0");
                     FightRandomMob(player);
                     BackToMenu(player);
                     break;
