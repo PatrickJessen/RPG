@@ -108,7 +108,6 @@ namespace RPG
             "Snakecord"
         };
 
-
         public string HealPlayer(Player player)
         {
             double playerlife;

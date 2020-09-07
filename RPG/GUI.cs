@@ -28,6 +28,8 @@ namespace RPG
         Player Necromancer = new Necromancer();
         List<Player> playerList = new List<Player>();
 
+        List<string> playerInventory = new List<string>();
+
         string[] randomNames = new string[]
         {
             "Fallen",
@@ -282,6 +284,8 @@ namespace RPG
             Console.WriteLine($"# 5.{GUIFunctions.StringAlign("Item Shop")}#");
             Console.WriteLine($"#   {GUIFunctions.StringAlign("")}#");
             Console.WriteLine($"# 6.{GUIFunctions.StringAlign("Heal " + player.Name)}#");
+            Console.WriteLine($"#   {GUIFunctions.StringAlign("")}#");
+            Console.WriteLine($"# 7.{GUIFunctions.StringAlign("Equip Items")}#");
             Console.WriteLine(GUIFunctions.SquaregAlign());
 
             userInput = Console.ReadLine();
@@ -319,6 +323,12 @@ namespace RPG
                     BackToMenu(player);
                     break;
                 case "6":
+                    camp.HealPlayer(player);
+                    Console.ReadLine();
+                    Console.WriteLine("Press b to get back to menu!");
+                    BackToMenu(player);
+                    break;
+                case "7":
                     camp.HealPlayer(player);
                     Console.ReadLine();
                     Console.WriteLine("Press b to get back to menu!");
@@ -463,6 +473,7 @@ namespace RPG
                 {
                     Console.WriteLine($"{player.Name} Won the fight!");
                     Console.WriteLine(camp.CallRandItem(player.myQuest.QuestStory));
+                    playerInventory.Add(camp.CallRandItem(player.myQuest.QuestStory));
                     player.ExpToLevelUp = exp.ExpNeededForLevel(player);
                     player.Experience += player.Level * player.MyQuest.QuestStory * 3;
                     exp.LevelingUp(player);
