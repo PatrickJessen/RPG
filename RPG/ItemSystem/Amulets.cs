@@ -16,9 +16,11 @@ namespace RPG.ItemSystem
         public int Life { get; set; }
 
         Random rand = new Random(Guid.NewGuid().GetHashCode());
+
         public Amulets(string name, int iLevel) : base(name, iLevel)
         {
             iLevel = 1;
+            ItemType = "Amulet";
             Randomize(iLevel);
         }
 

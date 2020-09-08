@@ -10,6 +10,7 @@ namespace RPG.ItemSystem
     {
         public Shields(string name, int iLevel) : base(name, iLevel)
         {
+            ItemType = "Shields";
         }
     }
 }

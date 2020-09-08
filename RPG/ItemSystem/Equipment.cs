@@ -8,7 +8,7 @@ namespace RPG.ItemSystem
 {
     abstract class Equipment : Items
     {
-        public Equipment(string name, int iLevel) : base(name, iLevel)
+        protected Equipment(string name, int iLevel) : base(name, iLevel)
         {
         }
 

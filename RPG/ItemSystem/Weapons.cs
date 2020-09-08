@@ -12,6 +12,7 @@ namespace RPG.ItemSystem
 
         public Weapons(string name, int iLevel) : base(name, iLevel)
         {
+            ItemType = "Weapon";
             Randomize(iLevel);
         }
 

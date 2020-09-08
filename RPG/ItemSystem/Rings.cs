@@ -14,9 +14,11 @@ namespace RPG.ItemSystem
         public int Strength { get; set; }
         public int Energy { get; set; }
         public int Life { get; set; }
+
         public Rings(string name, int iLevel) : base(name, iLevel)
         {
             iLevel = 1;
+            ItemType = "Ring";
             Randomize(iLevel);
         }
 

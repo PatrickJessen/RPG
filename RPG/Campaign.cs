@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using RPG.ItemSystem;
 
@@ -108,6 +109,8 @@ namespace RPG
             "Snakecord"
         };
 
+        string userInput;
+
         public string HealPlayer(Player player)
         {
             double playerlife;
@@ -124,48 +127,136 @@ namespace RPG
         }
 
         Random rand = new Random();
-        public string CallRandItem(int itemlvl)
+        public Items CallRandItem(int itemlvl)
         {
             int temp = rand.Next(1, 100);
-            if (Enumerable.Range(1, 50).Contains(temp))
+            if (Enumerable.Range(1, 100).Contains(temp))
             {
                 return MakeRandItem(itemlvl);
             }
             return null;
         }
 
-        Random r = new Random(Guid.NewGuid().GetHashCode());
-        private string MakeRandItem(int itemlvl)
+        private void MoveGear(List<Items> removeItem, List<Items> addItem, int num)
         {
-            switch (r.Next(1,9))
+            if (removeItem[num].ItemType == addItem[num].ItemType && addItem.Count < 10)
+            {
+                addItem.Add(removeItem[num]);
+                removeItem.RemoveAt(num);
+            }
+        }
+
+        public void AddStats(List<Items> equippedGear, Player player)
+        {
+            foreach (Items item in equippedGear)
+            {
+                player.Strength += item.Strength; //nothing to see here
+            }
+        }
+
+        public void EquipGear(List<Items> removeItem, List<Items> addItem)
+        {
+            userInput = Console.ReadLine();
+            switch (userInput)
+            {
+                case "1":
+                    MoveGear(removeItem, addItem, 0);
+                    break;
+                case "2":
+                    MoveGear(removeItem, addItem, 1);
+                    break;
+                case "3":
+                    MoveGear(removeItem, addItem, 2);
+                    break;
+                case "4":
+                    MoveGear(removeItem, addItem, 3);
+                    break;
+                case "5":
+                    MoveGear(removeItem, addItem, 4);
+                    break;
+                case "6":
+                    MoveGear(removeItem, addItem, 5);
+                    break;
+                case "7":
+                    MoveGear(removeItem, addItem, 6);
+                    break;
+                case "8":
+                    MoveGear(removeItem, addItem, 7);
+                    break;
+                case "9":
+                    MoveGear(removeItem, addItem, 8);
+                    break;
+            }
+        }
+
+        public string PrintLootStat(List<Items> item)
+        {
+            string combString ="";
+            for (int i = 0; i < item.Count; i++)
+            {
+                if (item[i].GetType().Name.ToString() == "Amulets")
+                {
+                    combString  += $"{((Amulets)item[i]).Name}, Dex: {((Amulets)item[i]).Dexterity}, Vit: {((Amulets)item[i]).Vitality}, Str: {((Amulets)item[i]).Strength}, Nrg: {((Amulets)item[i]).Energy}, Life: {((Amulets)item[i]).Life}, Ilvl: {((Amulets)item[i]).ILevel}# \n\n#";
+                }
+                else if (item[i].GetType().Name.ToString() == "Belts")
+                {
+                    combString += $"#{((Belts)item[i]).Name}, Def: {((Belts)item[i]).Defense}, Life: {((Belts)item[i]).Life}, Ilvl: {((Belts)item[i]).ILevel}# \n\n";
+                }
+                else if (item[i].GetType().Name.ToString() == "ChestPlate")
+                {
+                    combString += $"#{((ChestPlate)item[i]).Name}, Def: {((ChestPlate)item[i]).Defense}, Life: {((ChestPlate)item[i]).Life}, Ilvl: {((ChestPlate)item[i]).ILevel}# \n\n";
+                }
+                else if (item[i].GetType().Name.ToString() == "Rings")
+                {
+                    combString += $"#{((Rings)item[i]).Name}, Dmg: {((Rings)item[i]).Damage}, Vit {((Rings)item[i]).Vitality}, Dex {((Rings)item[i]).Dexterity}, Life: {((Rings)item[i]).Life}, Ilvl: {((Rings)item[i]).ILevel}# \n\n";
+                }
+                else if (item[i].GetType().Name.ToString() == "Weapons")
+                {
+                    combString += $"#{((Weapons)item[i]).Name}, Dmg: {((Weapons)item[i]).Damage}, Ilvl: {((Weapons)item[i]).ILevel}# \n\n";
+                }
+                else if (item[i].GetType().Name.ToString() == "Shields")
+                {
+                    combString += $"#{((Shields)item[i]).Name}, Def: {((Shields)item[i]).Defense}, Life: {((Shields)item[i]).Life}, Ilvl: {((Shields)item[i]).ILevel}# \n\n";
+                }
+                else if (item[i].GetType().Name.ToString() == "Gloves")
+                {
+                    combString += $"#{((Gloves)item[i]).Name}, Def: {((Gloves)item[i]).Defense}, Life: {((Gloves)item[i]).Life}, Ilvl: {((Gloves)item[i]).ILevel}# \n\n";
+                }
+                else if (item[i].GetType().Name.ToString() == "Boots")
+                {
+                    combString += $"#{((Boots)item[i]).Name}, Def: {((Boots)item[i]).Defense}, Life: {((Boots)item[i]).Life}, Ilvl: {((Boots)item[i]).ILevel}# \n\n";
+                }
+                else if (item[i].GetType().Name.ToString() == "Belts")
+                {
+                    combString += $"#{((Helmet)item[i]).Name}, Def: {((Helmet)item[i]).Defense} Life: {((Helmet)item[i]).Life}, Ilvl: {((Helmet)item[i]).ILevel}# \n\n";
+                }
+            }
+            return combString;
+        }
+
+        Random r = new Random(Guid.NewGuid().GetHashCode());
+        private Items MakeRandItem(int itemlvl)
+        {
+            switch (r.Next(1, 9))
             {
                 case 1:
-                    new Amulets(amuletNames[r.Next(0, amuletNames.Length)], itemlvl);
-                    return $"You found {amuletNames[r.Next(0, amuletNames.Length)]}";
-                case 2:
-                    new Belts(beltNames[r.Next(0, beltNames.Length)], itemlvl);
-                    return $"You found {beltNames[r.Next(0, beltNames.Length)]}";
+                    return new Amulets(amuletNames[r.Next(0, amuletNames.Length)], itemlvl);
+                case 2:                    
+                    return new Belts(beltNames[r.Next(0, beltNames.Length)], itemlvl);
                 case 3:
-                    new ChestPlate(chestNames[r.Next(0, chestNames.Length)], itemlvl);
-                    return $"You found {chestNames[r.Next(0, chestNames.Length)]}";
+                    return new ChestPlate(chestNames[r.Next(0, chestNames.Length)], itemlvl);
                 case 4:
-                    new Rings(ringNames[r.Next(0, ringNames.Length)], itemlvl);
-                    return $"You found {ringNames[r.Next(0, ringNames.Length)]}";
+                    return new Rings(ringNames[r.Next(0, ringNames.Length)], itemlvl);
                 case 5:
-                    new Weapons(weaponNames[r.Next(0, weaponNames.Length)], itemlvl);
-                    return $"You found {weaponNames[r.Next(0, weaponNames.Length)]}";
+                    return new Weapons(weaponNames[r.Next(0, weaponNames.Length)], itemlvl);
                 case 6:
-                    new Shields(shieldNames[r.Next(0, shieldNames.Length)], itemlvl);
-                    return $"You found {shieldNames[r.Next(0, shieldNames.Length)]}";
+                    return new Shields(shieldNames[r.Next(0, shieldNames.Length)], itemlvl);
                 case 7:
-                    new Gloves(glovesNames[r.Next(0, glovesNames.Length)], itemlvl);
-                    return $"You found {glovesNames[r.Next(0, glovesNames.Length)]}";
+                    return new Gloves(glovesNames[r.Next(0, glovesNames.Length)], itemlvl);
                 case 8:
-                    new Boots(bootsNames[r.Next(0, bootsNames.Length)], itemlvl);
-                    return $"You found {bootsNames[r.Next(0, bootsNames.Length)]}";
+                    return new Boots(bootsNames[r.Next(0, bootsNames.Length)], itemlvl);
                 case 9:
-                    new Helmet(helmNames[r.Next(0, helmNames.Length)], itemlvl);
-                    return $"You found {helmNames[r.Next(0, helmNames.Length)]}";
+                    return new Helmet(helmNames[r.Next(0, helmNames.Length)], itemlvl);
             }
             return null;
         }

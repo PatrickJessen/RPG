@@ -16,6 +16,7 @@ namespace RPG.ItemSystem
             set { id = id++; }
         }
 
+        public string ItemType { get; set; }
         public string Name { get; set; }
         public int ILevel { get; set; }
 

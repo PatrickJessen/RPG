@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RPG.ItemSystem;
 
 namespace RPG
 {
@@ -28,7 +29,9 @@ namespace RPG
         Player Necromancer = new Necromancer();
         List<Player> playerList = new List<Player>();
 
-        List<string> playerInventory = new List<string>();
+        public List<Items> playerInventory = new List<Items>();
+
+        public List<Items> EquippedGear = new List<Items>();
 
         string[] randomNames = new string[]
         {
@@ -345,17 +348,7 @@ namespace RPG
         private void DrawInventory()
         {
             Console.Clear();
-            Console.WriteLine(GUIFunctions.SquaregAlign());
-            Console.WriteLine($"#{GUIFunctions.StringAlign("INVENTORY", 25)}#");
-            Console.WriteLine($"#{GUIFunctions.StringAlign("Headgear", 26)}#");
-            Console.WriteLine("#                                        Amulet                #");
-            Console.WriteLine("#               Weapon                  Shield                 #");
-            Console.WriteLine("#                         Chest Armor                          #");
-            Console.WriteLine("#                      Ring        Ring                        #");
-            Console.WriteLine("#                 Gloves     Belt                              #");
-            Console.WriteLine("#                            Boots                             #");
-            Console.WriteLine("#                                                              #");
-            Console.WriteLine(GUIFunctions.SquaregAlign());
+            Console.WriteLine($"{camp.PrintLootStat(playerInventory)}");
         }
 
         private void DrawShop()
@@ -472,8 +465,10 @@ namespace RPG
                 if (randomMob.Life <= 0)
                 {
                     Console.WriteLine($"{player.Name} Won the fight!");
-                    Console.WriteLine(camp.CallRandItem(player.myQuest.QuestStory));
-                    playerInventory.Add(camp.CallRandItem(player.myQuest.QuestStory));
+                    Items TempItem = camp.CallRandItem(player.myQuest.QuestStory);
+                    Console.WriteLine("You found " + TempItem.Name);
+                    playerInventory.Add(TempItem);
+                    camp.PrintLootStat(playerInventory);
                     player.ExpToLevelUp = exp.ExpNeededForLevel(player);
                     player.Experience += player.Level * player.MyQuest.QuestStory * 3;
                     exp.LevelingUp(player);

@@ -24,8 +24,7 @@ namespace RPG.ItemSystem
             set { life = value; }
         }
 
-
-        public Armor(string name, int iLevel) : base(name, iLevel)
+        protected Armor(string name, int iLevel) : base(name, iLevel)
         {
             Defense = defense;
             Life = life;
