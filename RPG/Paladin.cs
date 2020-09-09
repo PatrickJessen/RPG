@@ -8,7 +8,7 @@ namespace RPG
 {
     class Paladin : Player
     {
-        public Paladin()
+        public Paladin() : base()
         {
             Strength = 25;
             Dexterity = 20;

@@ -9,8 +9,9 @@ namespace RPG
 {
     class ChestPlate : Armor
     {
-        public ChestPlate(string name, int iLevel) : base(name, iLevel)
+        public ChestPlate(string name, int iLevel, string itemType) : base(name, iLevel, itemType)
         {
+            itemType = "Armor";
         }
     }
 }

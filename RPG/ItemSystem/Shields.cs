@@ -8,7 +8,7 @@ namespace RPG.ItemSystem
 {
     class Shields : Armor
     {
-        public Shields(string name, int iLevel) : base(name, iLevel)
+        public Shields(string name, int iLevel, string itemType) : base(name, iLevel, itemType)
         {
             ItemType = "Shields";
         }

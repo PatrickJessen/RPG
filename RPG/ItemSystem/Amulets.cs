@@ -17,7 +17,7 @@ namespace RPG.ItemSystem
 
         Random rand = new Random(Guid.NewGuid().GetHashCode());
 
-        public Amulets(string name, int iLevel) : base(name, iLevel)
+        public Amulets(string name, int iLevel, string itemType) : base(name, iLevel, itemType)
         {
             iLevel = 1;
             ItemType = "Amulet";
@@ -73,6 +73,28 @@ namespace RPG.ItemSystem
                 default:
                     break;
             }
+        }
+
+        public override Player GiveStats(Player player)
+        {
+            player.Vitality += Vitality;
+            player.Dexterity += Dexterity;
+            player.Strength += Strength;
+            player.Energy += Energy;
+            player.Life += Life;
+
+            return player;
+        }
+
+        public override Player RemoveStats(Player player)
+        {
+            player.Vitality -= Vitality;
+            player.Dexterity -= Dexterity;
+            player.Strength -= Strength;
+            player.Energy -= Energy;
+            player.Life -= Life;
+
+            return player;
         }
     }
 }

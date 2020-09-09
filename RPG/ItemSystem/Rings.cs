@@ -15,7 +15,7 @@ namespace RPG.ItemSystem
         public int Energy { get; set; }
         public int Life { get; set; }
 
-        public Rings(string name, int iLevel) : base(name, iLevel)
+        public Rings(string name, int iLevel, string itemType) : base(name, iLevel, itemType)
         {
             iLevel = 1;
             ItemType = "Ring";
@@ -78,6 +78,28 @@ namespace RPG.ItemSystem
                 default:
                     break;
             }
+        }
+
+        public override Player GiveStats(Player player)
+        {
+            player.Vitality += Vitality;
+            player.Dexterity += Dexterity;
+            player.Strength += Strength;
+            player.Energy += Energy;
+            player.Life += Life;
+
+            return player;
+        }
+
+        public override Player RemoveStats(Player player)
+        {
+            player.Vitality -= Vitality;
+            player.Dexterity -= Dexterity;
+            player.Strength -= Strength;
+            player.Energy -= Energy;
+            player.Life -= Life;
+
+            return player;
         }
     }
 }

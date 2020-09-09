@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RPG.ItemSystem;
+using System.Collections.ObjectModel;
 
 namespace RPG
 {
@@ -31,7 +32,7 @@ namespace RPG
 
         public List<Items> playerInventory = new List<Items>();
 
-        public List<Items> EquippedGear = new List<Items>();
+        public List<Items> equippedGear = new List<Items>();
 
         string[] randomNames = new string[]
         {
@@ -288,7 +289,7 @@ namespace RPG
             Console.WriteLine($"#   {GUIFunctions.StringAlign("")}#");
             Console.WriteLine($"# 6.{GUIFunctions.StringAlign("Heal " + player.Name)}#");
             Console.WriteLine($"#   {GUIFunctions.StringAlign("")}#");
-            Console.WriteLine($"# 7.{GUIFunctions.StringAlign("Equip Items")}#");
+            Console.WriteLine($"# 7.{GUIFunctions.StringAlign("Equipped Items")}#");
             Console.WriteLine(GUIFunctions.SquaregAlign());
 
             userInput = Console.ReadLine();
@@ -315,6 +316,7 @@ namespace RPG
                     break;
                 case "4":
                     DrawInventory();
+                    camp.EquipGear(playerInventory, player.myItems);
                     Console.ReadLine();
                     Console.WriteLine("Press b to get back to menu!");
                     BackToMenu(player);
@@ -332,7 +334,7 @@ namespace RPG
                     BackToMenu(player);
                     break;
                 case "7":
-                    camp.HealPlayer(player);
+                    DrawEquippedItems(player);
                     Console.ReadLine();
                     Console.WriteLine("Press b to get back to menu!");
                     BackToMenu(player);
@@ -349,6 +351,13 @@ namespace RPG
         {
             Console.Clear();
             Console.WriteLine($"{camp.PrintLootStat(playerInventory)}");
+        }
+
+        private void DrawEquippedItems(Player player)
+        {
+            Console.Clear();
+                //Console.WriteLine($"{myList[i].Name} Ilevel: {myList[i].ILevel}");
+                Console.WriteLine($"{camp.PrintLootStat2(player.myItems)}");
         }
 
         private void DrawShop()

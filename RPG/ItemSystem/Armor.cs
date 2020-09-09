@@ -24,7 +24,7 @@ namespace RPG.ItemSystem
             set { life = value; }
         }
 
-        protected Armor(string name, int iLevel) : base(name, iLevel)
+        protected Armor(string name, int iLevel, string itemType) : base(name, iLevel, itemType)
         {
             Defense = defense;
             Life = life;
@@ -63,6 +63,22 @@ namespace RPG.ItemSystem
                 default:
                     break;
             }
+        }
+
+        public override Player GiveStats(Player player)
+        {
+            player.Defense += Defense;
+            player.Life += Life;
+
+            return player;
+        }
+
+        public override Player RemoveStats(Player player)
+        {
+            player.Defense -= Defense;
+            player.Life -= Life;
+
+            return player;
         }
     }
 }

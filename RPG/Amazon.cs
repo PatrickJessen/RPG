@@ -8,7 +8,7 @@ namespace RPG
 {
     class Amazon : Player
     {
-        public Amazon()
+        public Amazon() : base()
         {
             Strength = 20;
             Dexterity = 25;

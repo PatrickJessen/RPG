@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -10,6 +11,7 @@ namespace RPG
 {
     class Campaign
     {
+
         string[] helmNames = new string[]
 {
             "Shako",
@@ -137,24 +139,22 @@ namespace RPG
             return null;
         }
 
-        private void MoveGear(List<Items> removeItem, List<Items> addItem, int num)
+        private void MoveGear(List<Items> removeItem, ObservableCollection<Items> myList, int num)
         {
-            if (removeItem[num].ItemType == addItem[num].ItemType && addItem.Count < 14)
+            for (int i = 0; i < myList.Count; i++)
             {
-                addItem.Add(removeItem[num]);
-                removeItem.RemoveAt(num);
+                if (myList[i].ItemType == removeItem[num].ItemType)
+                {
+                    myList.Add(removeItem[num]);
+                    myList.RemoveAt(i);
+                    removeItem.RemoveAt(num);
+                    i = myList.Count + 1;
+                }
+
             }
         }
 
-        public void AddStats(List<Items> equippedGear, Player player)
-        {
-            foreach (Items item in equippedGear)
-            {
-                
-            }
-        }
-
-        public void EquipGear(List<Items> removeItem, List<Items> addItem)
+        public void EquipGear(List<Items> removeItem, ObservableCollection<Items> myList)
         {
             userInput = Console.ReadLine();
 
@@ -162,7 +162,7 @@ namespace RPG
             {
                 if (userInput == i.ToString())
                 {
-                    MoveGear(removeItem, addItem, i);
+                    MoveGear(removeItem, myList, i);
                 }
             }
         }
@@ -174,39 +174,84 @@ namespace RPG
             {
                 if (item[i].GetType().Name.ToString() == "Amulets")
                 {
-                    combString  += $"{i}. {((Amulets)item[i]).Name}, Dex: {((Amulets)item[i]).Dexterity}, Vit: {((Amulets)item[i]).Vitality}, Str: {((Amulets)item[i]).Strength}, Nrg: {((Amulets)item[i]).Energy}, Life: {((Amulets)item[i]).Life}, Ilvl: {((Amulets)item[i]).ILevel}# \n\n#";
+                    combString  += $"{i}. {((Amulets)item[i]).Name}, Dex: {((Amulets)item[i]).Dexterity}, Vit: {((Amulets)item[i]).Vitality}, Str: {((Amulets)item[i]).Strength}, Nrg: {((Amulets)item[i]).Energy}, Life: {((Amulets)item[i]).Life}, Ilvl: {((Amulets)item[i]).ILevel}, Type: {((Amulets)item[i]).ItemType}# \n\n#";
                 }
                 else if (item[i].GetType().Name.ToString() == "Belts")
                 {
-                    combString += $"{i}. {((Belts)item[i]).Name}, Def: {((Belts)item[i]).Defense}, Life: {((Belts)item[i]).Life}, Ilvl: {((Belts)item[i]).ILevel}# \n\n";
+                    combString += $"{i}. {((Belts)item[i]).Name}, Def: {((Belts)item[i]).Defense}, Life: {((Belts)item[i]).Life}, Ilvl: {((Belts)item[i]).ILevel}, Type: {((Belts)item[i]).ItemType}# \n\n";
                 }
                 else if (item[i].GetType().Name.ToString() == "ChestPlate")
                 {
-                    combString += $"{i}. {((ChestPlate)item[i]).Name}, Def: {((ChestPlate)item[i]).Defense}, Life: {((ChestPlate)item[i]).Life}, Ilvl: {((ChestPlate)item[i]).ILevel}# \n\n";
+                    combString += $"{i}. {((ChestPlate)item[i]).Name}, Def: {((ChestPlate)item[i]).Defense}, Life: {((ChestPlate)item[i]).Life}, Ilvl: {((ChestPlate)item[i]).ILevel}, Type: {((ChestPlate)item[i]).ItemType}# \n\n";
                 }
                 else if (item[i].GetType().Name.ToString() == "Rings")
                 {
-                    combString += $"{i}. {((Rings)item[i]).Name}, Dmg: {((Rings)item[i]).Damage}, Vit {((Rings)item[i]).Vitality}, Dex {((Rings)item[i]).Dexterity}, Life: {((Rings)item[i]).Life}, Ilvl: {((Rings)item[i]).ILevel}# \n\n";
+                    combString += $"{i}. {((Rings)item[i]).Name}, Dmg: {((Rings)item[i]).Damage}, Vit {((Rings)item[i]).Vitality}, Dex {((Rings)item[i]).Dexterity}, Life: {((Rings)item[i]).Life}, Ilvl: {((Rings)item[i]).ILevel}, Type: {((Rings)item[i]).ItemType}# \n\n";
                 }
                 else if (item[i].GetType().Name.ToString() == "Weapons")
                 {
-                    combString += $"{i}. {((Weapons)item[i]).Name}, Dmg: {((Weapons)item[i]).Damage}, Ilvl: {((Weapons)item[i]).ILevel}# \n\n";
+                    combString += $"{i}. {((Weapons)item[i]).Name}, Dmg: {((Weapons)item[i]).Damage}, Ilvl: {((Weapons)item[i]).ILevel}, Type: {((Weapons)item[i]).ItemType}# \n\n";
                 }
                 else if (item[i].GetType().Name.ToString() == "Shields")
                 {
-                    combString += $"{i}. {((Shields)item[i]).Name}, Def: {((Shields)item[i]).Defense}, Life: {((Shields)item[i]).Life}, Ilvl: {((Shields)item[i]).ILevel}# \n\n";
+                    combString += $"{i}. {((Shields)item[i]).Name}, Def: {((Shields)item[i]).Defense}, Life: {((Shields)item[i]).Life}, Ilvl: {((Shields)item[i]).ILevel}, Type: {((Shields)item[i]).ItemType}# \n\n";
                 }
                 else if (item[i].GetType().Name.ToString() == "Gloves")
                 {
-                    combString += $"{i}. {((Gloves)item[i]).Name}, Def: {((Gloves)item[i]).Defense}, Life: {((Gloves)item[i]).Life}, Ilvl: {((Gloves)item[i]).ILevel}# \n\n";
+                    combString += $"{i}. {((Gloves)item[i]).Name}, Def: {((Gloves)item[i]).Defense}, Life: {((Gloves)item[i]).Life}, Ilvl: {((Gloves)item[i]).ILevel}, Type: {((Gloves)item[i]).ItemType}# \n\n";
                 }
                 else if (item[i].GetType().Name.ToString() == "Boots")
                 {
-                    combString += $"{i}. {((Boots)item[i]).Name}, Def: {((Boots)item[i]).Defense}, Life: {((Boots)item[i]).Life}, Ilvl: {((Boots)item[i]).ILevel}# \n\n";
+                    combString += $"{i}. {((Boots)item[i]).Name}, Def: {((Boots)item[i]).Defense}, Life: {((Boots)item[i]).Life}, Ilvl: {((Boots)item[i]).ILevel}, Type: {((Boots)item[i]).ItemType}# \n\n";
                 }
                 else if (item[i].GetType().Name.ToString() == "Belts")
                 {
-                    combString += $"{i}. {((Helmet)item[i]).Name}, Def: {((Helmet)item[i]).Defense} Life: {((Helmet)item[i]).Life}, Ilvl: {((Helmet)item[i]).ILevel}# \n\n";
+                    combString += $"{i}. {((Helmet)item[i]).Name}, Def: {((Helmet)item[i]).Defense} Life: {((Helmet)item[i]).Life}, Ilvl: {((Helmet)item[i]).ILevel}, Type: {((Helmet)item[i]).ItemType}# \n\n";
+                }
+            }
+            return combString;
+        }
+
+        public string PrintLootStat2(ObservableCollection<Items> item)
+        {
+            string combString = "";
+            for (int i = 0; i < item.Count; i++)
+            {
+                if (item[i].GetType().Name.ToString() == "Amulets")
+                {
+                    combString += $"{i}. {((Amulets)item[i]).Name}, Dex: {((Amulets)item[i]).Dexterity}, Vit: {((Amulets)item[i]).Vitality}, Str: {((Amulets)item[i]).Strength}, Nrg: {((Amulets)item[i]).Energy}, Life: {((Amulets)item[i]).Life}, Ilvl: {((Amulets)item[i]).ILevel}, Type: {((Amulets)item[i]).ItemType}# \n\n#";
+                }
+                else if (item[i].GetType().Name.ToString() == "Belts")
+                {
+                    combString += $"{i}. {((Belts)item[i]).Name}, Def: {((Belts)item[i]).Defense}, Life: {((Belts)item[i]).Life}, Ilvl: {((Belts)item[i]).ILevel}, Type: {((Belts)item[i]).ItemType}# \n\n";
+                }
+                else if (item[i].GetType().Name.ToString() == "ChestPlate")
+                {
+                    combString += $"{i}. {((ChestPlate)item[i]).Name}, Def: {((ChestPlate)item[i]).Defense}, Life: {((ChestPlate)item[i]).Life}, Ilvl: {((ChestPlate)item[i]).ILevel}, Type: {((ChestPlate)item[i]).ItemType}# \n\n";
+                }
+                else if (item[i].GetType().Name.ToString() == "Rings")
+                {
+                    combString += $"{i}. {((Rings)item[i]).Name}, Dmg: {((Rings)item[i]).Damage}, Vit {((Rings)item[i]).Vitality}, Dex {((Rings)item[i]).Dexterity}, Life: {((Rings)item[i]).Life}, Ilvl: {((Rings)item[i]).ILevel}, Type: {((Rings)item[i]).ItemType}# \n\n";
+                }
+                else if (item[i].GetType().Name.ToString() == "Weapons")
+                {
+                    combString += $"{i}. {((Weapons)item[i]).Name}, Dmg: {((Weapons)item[i]).Damage}, Ilvl: {((Weapons)item[i]).ILevel}, Type: {((Weapons)item[i]).ItemType}# \n\n";
+                }
+                else if (item[i].GetType().Name.ToString() == "Shields")
+                {
+                    combString += $"{i}. {((Shields)item[i]).Name}, Def: {((Shields)item[i]).Defense}, Life: {((Shields)item[i]).Life}, Ilvl: {((Shields)item[i]).ILevel}, Type: {((Shields)item[i]).ItemType}# \n\n";
+                }
+                else if (item[i].GetType().Name.ToString() == "Gloves")
+                {
+                    combString += $"{i}. {((Gloves)item[i]).Name}, Def: {((Gloves)item[i]).Defense}, Life: {((Gloves)item[i]).Life}, Ilvl: {((Gloves)item[i]).ILevel}, Type: {((Gloves)item[i]).ItemType}# \n\n";
+                }
+                else if (item[i].GetType().Name.ToString() == "Boots")
+                {
+                    combString += $"{i}. {((Boots)item[i]).Name}, Def: {((Boots)item[i]).Defense}, Life: {((Boots)item[i]).Life}, Ilvl: {((Boots)item[i]).ILevel}, Type: {((Boots)item[i]).ItemType}# \n\n";
+                }
+                else if (item[i].GetType().Name.ToString() == "Belts")
+                {
+                    combString += $"{i}. {((Helmet)item[i]).Name}, Def: {((Helmet)item[i]).Defense} Life: {((Helmet)item[i]).Life}, Ilvl: {((Helmet)item[i]).ILevel}, Type: {((Helmet)item[i]).ItemType}# \n\n";
                 }
             }
             return combString;
@@ -218,23 +263,23 @@ namespace RPG
             switch (r.Next(1, 9))
             {
                 case 1:
-                    return new Amulets(amuletNames[r.Next(0, amuletNames.Length)], itemlvl);
+                    return new Amulets(amuletNames[r.Next(0, amuletNames.Length)], itemlvl, "Amulet");
                 case 2:                    
-                    return new Belts(beltNames[r.Next(0, beltNames.Length)], itemlvl);
+                    return new Belts(beltNames[r.Next(0, beltNames.Length)], itemlvl, "Belt");
                 case 3:
-                    return new ChestPlate(chestNames[r.Next(0, chestNames.Length)], itemlvl);
+                    return new ChestPlate(chestNames[r.Next(0, chestNames.Length)], itemlvl, "Armor");
                 case 4:
-                    return new Rings(ringNames[r.Next(0, ringNames.Length)], itemlvl);
+                    return new Rings(ringNames[r.Next(0, ringNames.Length)], itemlvl, "Ring");
                 case 5:
-                    return new Weapons(weaponNames[r.Next(0, weaponNames.Length)], itemlvl);
+                    return new Weapons(weaponNames[r.Next(0, weaponNames.Length)], itemlvl, "Weapon");
                 case 6:
-                    return new Shields(shieldNames[r.Next(0, shieldNames.Length)], itemlvl);
+                    return new Shields(shieldNames[r.Next(0, shieldNames.Length)], itemlvl, "Shields");
                 case 7:
-                    return new Gloves(glovesNames[r.Next(0, glovesNames.Length)], itemlvl);
+                    return new Gloves(glovesNames[r.Next(0, glovesNames.Length)], itemlvl, "Gloves");
                 case 8:
-                    return new Boots(bootsNames[r.Next(0, bootsNames.Length)], itemlvl);
+                    return new Boots(bootsNames[r.Next(0, bootsNames.Length)], itemlvl, "Boots");
                 case 9:
-                    return new Helmet(helmNames[r.Next(0, helmNames.Length)], itemlvl);
+                    return new Helmet(helmNames[r.Next(0, helmNames.Length)], itemlvl, "Helmet");
             }
             return null;
         }

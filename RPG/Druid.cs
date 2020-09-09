@@ -9,7 +9,7 @@ namespace RPG
 {
     class Druid : Player
     {
-        public Druid()
+        public Druid() : base()
         {
             Strength = 15;
             Dexterity = 20;

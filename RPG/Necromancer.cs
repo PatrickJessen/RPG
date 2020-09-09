@@ -8,7 +8,7 @@ namespace RPG
 {
     class Necromancer : Player
     {
-        public Necromancer()
+        public Necromancer() : base()
         {
             Strength = 15;
             Dexterity = 25;

@@ -20,11 +20,12 @@ namespace RPG.ItemSystem
         public string Name { get; set; }
         public int ILevel { get; set; }
 
-        public Items(string name, int iLevel)
+        public Items(string name, int iLevel, string itemType)
         {
             Id = 0;
             Name = name;
             ILevel = iLevel;
+            ItemType = itemType;
         }
     }
 }

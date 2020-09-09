@@ -8,7 +8,7 @@ namespace RPG
 {
     class Barbarian : Player
     {
-        public Barbarian()
+        public Barbarian() : base()
         {
             Strength = 30;
             Dexterity = 20;
@@ -21,7 +21,6 @@ namespace RPG
             MyQuest.QuestStory = 1;
 
             Name = "Barbarian";
-
             UpdateStats();
         }
 

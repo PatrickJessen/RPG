@@ -8,7 +8,7 @@ namespace RPG
 {
     class Sorceress : Player
     {
-        public Sorceress()
+        public Sorceress() : base()
         {
             Strength = 10;
             Dexterity = 25;

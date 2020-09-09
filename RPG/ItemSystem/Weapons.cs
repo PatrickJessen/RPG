@@ -10,7 +10,7 @@ namespace RPG.ItemSystem
     {
         public double Damage { get; set; }
 
-        public Weapons(string name, int iLevel) : base(name, iLevel)
+        public Weapons(string name, int iLevel, string itemType) : base(name, iLevel, itemType)
         {
             ItemType = "Weapon";
             Randomize(iLevel);
@@ -42,6 +42,20 @@ namespace RPG.ItemSystem
                 default:
                     break;
             }
+        }
+
+        public override Player GiveStats(Player player)
+        {
+            player.Damage += Damage;
+
+            return player;
+        }
+
+        public override Player RemoveStats(Player player)
+        {
+            player.Damage -= Damage;
+
+            return player;
         }
     }
 }

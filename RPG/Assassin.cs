@@ -8,7 +8,7 @@ namespace RPG
 {
     class Assassin : Player
     {
-        public Assassin()
+        public Assassin() : base()
         {
             Strength = 20;
             Dexterity = 20;
