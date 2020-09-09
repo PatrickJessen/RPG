@@ -466,7 +466,9 @@ namespace RPG
                 {
                     Console.WriteLine($"{player.Name} Won the fight!");
                     Items TempItem = camp.CallRandItem(player.myQuest.QuestStory);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("You found " + TempItem.Name);
+                    Console.ForegroundColor = ConsoleColor.Blue;
                     playerInventory.Add(TempItem);
                     camp.PrintLootStat(playerInventory);
                     player.ExpToLevelUp = exp.ExpNeededForLevel(player);
