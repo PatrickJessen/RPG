@@ -116,7 +116,7 @@ namespace RPG
         public string HealPlayer(Player player)
         {
             double playerlife;
-            playerlife = player.Life = player.Vitality * 5;
+            playerlife = player.Life += player.Vitality * 5;
             if (player.Life <= 0 && player.Life != playerlife)
             {
                 player.Life = player.Vitality * 1.5;

@@ -30,6 +30,11 @@ namespace RPG
             throw new NotImplementedException();
         }
 
+        public override double HealPlayer()
+        {
+            throw new NotImplementedException();
+        }
+
         public override void LevelUp()
         {
             Strength += (Level % 2 == 1 ? 2 : 1);

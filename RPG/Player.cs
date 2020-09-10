@@ -14,7 +14,11 @@ namespace RPG
         {
             Skill1,
             Skill2,
-            Skill3
+            Skill3,
+        }
+        public enum PlayerHeal
+        {
+            SmallPotion
         }
         public int Strength { get; set; }
         public int Dexterity { get; set; }
@@ -25,12 +29,18 @@ namespace RPG
         public double Damage { get; set; }
         public string Name { get; set;  }
         public int Level { get; set; }
+        public double Heal { get; set; }
         public double Experience { get; set; }
         public int ExpToLevelUp { get; set; }
         public int Gold { get; set; }
         public double Defense { get; set; }
+        public string skillNr1 { get; set; }
+        public string skillNr2 { get; set; }
+        public string skillNr3 { get; set; }
+        public string Potion { get; set; }
 
         public PlayerSkills mySkills { get; set; }
+        public PlayerHeal healPlayer { get; set; }
 
 
         public Quest myQuest = new Quest();
@@ -61,6 +71,8 @@ namespace RPG
         public abstract void UpdateStats();
 
         public abstract double DealDamage();
+
+        public abstract double HealPlayer();
             
         public string PrintStats()
         {

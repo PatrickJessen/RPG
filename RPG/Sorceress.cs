@@ -36,7 +36,16 @@ namespace RPG
             get { return frostbolt = FasterCastRate * Level + ColdSkills + Energy; }
             set { frostbolt = value; }
         }
-        
+
+        private double drinkPotion;
+
+        public double DrinkPotion
+        {
+            get { return Life += Vitality / 2; }
+            set { drinkPotion = value; }
+        }
+
+
         //PlayerSkills mySkills = new PlayerSkills();
 
         public Sorceress() : base()
@@ -55,7 +64,10 @@ namespace RPG
             Lightningskills = 1;
             ColdSkills = 1;
 
-            
+            skillNr1 = "Fireball";
+            skillNr2 = "Lightning";
+            skillNr3 = "Frostbolt";
+            Potion = "Potion";
 
             Name = "Sorceress";
 
@@ -75,9 +87,10 @@ namespace RPG
 
         public override void UpdateStats()
         {
-            Damage = DealDamage();
-            Life = Vitality * 1.5;
-            Hitrate = Dexterity * 1.5 + Energy;
+            Damage += DealDamage();
+            Life += Vitality * 1.5;
+            Hitrate += Dexterity * 1.5 + Energy;
+            Heal += HealPlayer();
         }
 
         public override double DealDamage()
@@ -91,7 +104,15 @@ namespace RPG
                 case PlayerSkills.Skill3:
                     return Frostbolt;
             }
+            return 0;
+        }
 
+        public override double HealPlayer()
+        {
+            if (healPlayer == PlayerHeal.SmallPotion)
+            {
+                return DrinkPotion;
+            }
             return 0;
         }
     }

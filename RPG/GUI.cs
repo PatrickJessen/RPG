@@ -470,7 +470,7 @@ namespace RPG
                 }
 
                 temp = player.Damage;
-                randomMob.Life -= temp;
+                randomMob.Life -= temp; //FIIIIIIIX
                 DrawSkills(player);
                 ChooseSkill(player);
                 Console.WriteLine($"{player.Name} hit {randomMob.Name} for {temp}");
@@ -498,9 +498,10 @@ namespace RPG
 
         private void DrawSkills(Player player)
         {
-            Console.WriteLine($"Skill 1: {Player.PlayerSkills.Skill1}");
-            Console.WriteLine($"Skill 2: {Player.PlayerSkills.Skill2}");
-            Console.WriteLine($"Skill 3: {Player.PlayerSkills.Skill3}");
+            Console.WriteLine($"Skill 1: {player.skillNr1}");
+            Console.WriteLine($"Skill 2: {player.skillNr2}");
+            Console.WriteLine($"Skill 3: {player.skillNr3}");
+            Console.WriteLine($"Skill 4: {player.Potion}");
         }
 
         private void ChooseSkill(Player player)
@@ -516,6 +517,10 @@ namespace RPG
                     break;
                 case "3":
                     player.mySkills = Player.PlayerSkills.Skill3;
+                    break;
+                case "4":
+                    player.healPlayer = Player.PlayerHeal.SmallPotion;
+                    Console.WriteLine($"{player.Name} healed for {player.Heal}");
                     break;
             }
         }
