@@ -11,6 +11,7 @@ namespace RPG
         public string Name { get; set; }
         public double Dmg { get; set; }
         public double Life { get; set; }
+        public int Speed { get; set; }
         public Enemy()
         {
         }

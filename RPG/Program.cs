@@ -13,7 +13,8 @@ namespace RPG
         {
             GUI gui = new GUI();
             gui.StartStory();
-            
+            Console.WriteLine("hello world");
+            Console.ReadLine();
         }
     }
 }

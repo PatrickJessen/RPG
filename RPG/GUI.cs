@@ -17,11 +17,11 @@ namespace RPG
     class GUI
     {
         Bosses[] bossArray = new Bosses[5];
-        Bosses Andariel = new Bosses("Andariel", 5, 5);
-        Bosses Duriel = new Bosses("Duriel", 5, 5);
-        Bosses Mephisto = new Bosses("Mephisto", 5, 5);
-        Bosses Diablo = new Bosses("Diablo", 5, 5);
-        Bosses Baal = new Bosses("Baal", 5, 5);
+        Bosses Andariel = new Bosses("Andariel", 5, 5, 5);
+        Bosses Duriel = new Bosses("Duriel", 5, 5, 5);
+        Bosses Mephisto = new Bosses("Mephisto", 5, 5, 5);
+        Bosses Diablo = new Bosses("Diablo", 5, 5, 5);
+        Bosses Baal = new Bosses("Baal", 5, 5, 5);
         Player Druid = new Druid();
         Player Sorceress = new Sorceress();
         Player Paladin = new Paladin();
@@ -181,12 +181,13 @@ namespace RPG
 
         ExpSystem exp = new ExpSystem();
 
+        FightMethods fightSystem = new FightMethods();
+
         ConsoleKeyInfo keyPress = new ConsoleKeyInfo();
 
         char key = 'b';
         string userInput;
 
-        bool turn = true;
         public void StartStory()
         {
             AddBossesToList();
@@ -302,13 +303,13 @@ namespace RPG
                 case "1":
                     Console.Clear();
                     Console.WriteLine("Press any key to start the fight!\0");
-                    FightRandomMob(player);
+                    FightMob(player);
                     BackToMenu(player);
                     break;
                 case "2":
                     Console.Clear();
                     Console.WriteLine("Press any key to start the fight!");
-                    Story(player);
+                    //Story(player);
                     break;
                 case "3":
                     Console.Clear();
@@ -447,34 +448,71 @@ namespace RPG
             return 0;
         }
 
-        private void FightRandomMob(Player player)
+        //private void FightRandomMob(Player player)
+        //{
+        //    Random rand = new Random();
+        //    Bosses randomMob = new Bosses(randomNames[rand.Next(0, randomNames.Length)], player.MyQuest.QuestStory + 5 * 3, player.MyQuest.QuestStory + 3 * 3, rand.Next(player.MyQuest.QuestStory + 3, player.MyQuest.QuestStory + 8));
+        //    double temp;
+        //    while (player.Life > 0)
+        //    {
+        //        Console.ReadLine();
+        //        temp = randomMob.Dmg;
+        //        player.Life -= temp;
+        //        Console.WriteLine($"{randomMob.Name} hit {player.Name} for {temp}");
+        //        Console.WriteLine($"{player.Name} life is currently at: {player.Life}");
+        //        Console.ReadLine();
+        //        if (player.Life <= 0)
+        //        {
+        //            Console.WriteLine($"{randomMob.Name} won the fight! better heal up and get some better gear!");
+        //            Console.ReadLine();
+        //            player.Life = 0;
+        //            BackToMenu(player);
+        //            break;
+        //        }
+
+        //        temp = player.Damage;
+        //        randomMob.Life -= temp; //FIIIIIIIX
+        //        DrawSkills(player);
+        //        ChooseSkill(player);
+        //        Console.WriteLine($"{player.Name} hit {randomMob.Name} for {temp}");
+        //        Console.WriteLine($"{randomMob.Name} life is currently at: {randomMob.Life}");
+
+        //        if (randomMob.Life <= 0)
+        //        {
+        //            Console.WriteLine($"{player.Name} Won the fight!");
+        //            Items TempItem = camp.CallRandItem(player.myQuest.QuestStory);
+        //            Console.ForegroundColor = ConsoleColor.Yellow;
+        //            Console.WriteLine("You found " + TempItem.Name);
+        //            Console.ForegroundColor = ConsoleColor.Blue;
+        //            playerInventory.Add(TempItem);
+        //            camp.PrintLootStat(playerInventory);
+        //            player.ExpToLevelUp = exp.ExpNeededForLevel(player);
+        //            player.Experience += player.Level * player.MyQuest.QuestStory * 3;
+        //            exp.LevelingUp(player);
+        //            Console.WriteLine($"{player.Name} gained {player.Experience} exp");
+        //            Console.ReadLine();
+        //            BackToMenu(player);
+        //            break;
+        //        }
+        //    }
+        //}
+
+        public void FightMob(Player player)
         {
             Random rand = new Random();
-            Bosses randomMob = new Bosses(randomNames[rand.Next(0, randomNames.Length)], player.MyQuest.QuestStory + 5 * 3, player.MyQuest.QuestStory + 3 * 3);
-            double temp;
-            while (player.Life > 0)
-            {
-                Console.ReadLine();
-                temp = randomMob.Dmg;
-                player.Life -= temp;
-                Console.WriteLine($"{randomMob.Name} hit {player.Name} for {temp}");
-                Console.WriteLine($"{player.Name} life is currently at: {player.Life}");
-                Console.ReadLine();
-                if (player.Life <= 0)
-                {
-                    Console.WriteLine($"{randomMob.Name} won the fight! better heal up and get some better gear!");
-                    Console.ReadLine();
-                    player.Life = 0;
-                    BackToMenu(player);
-                    break;
-                }
+            Bosses randomMob = new Bosses(randomNames[rand.Next(0, randomNames.Length)], player.MyQuest.QuestStory + 5 * 3, player.MyQuest.QuestStory + 3 * 3, rand.Next(player.MyQuest.QuestStory + 3, player.MyQuest.QuestStory + 8));
 
-                temp = player.Damage;
-                randomMob.Life -= temp; //FIIIIIIIX
-                DrawSkills(player);
-                ChooseSkill(player);
-                Console.WriteLine($"{player.Name} hit {randomMob.Name} for {temp}");
-                Console.WriteLine($"{randomMob.Name} life is currently at: {randomMob.Life}");
+            if (player.Life <= 0)
+            {
+                BackToMenu(player);
+            }
+
+            Console.ReadLine();
+            fightSystem.CheckWhoGoesFirst(player, randomMob);
+            while (player.Life > 0 || randomMob.Life > 0)
+            {
+                Console.WriteLine(fightSystem.FirstStrike(player, randomMob));
+                Console.ReadLine();
 
                 if (randomMob.Life <= 0)
                 {
@@ -491,46 +529,15 @@ namespace RPG
                     Console.WriteLine($"{player.Name} gained {player.Experience} exp");
                     Console.ReadLine();
                     BackToMenu(player);
-                    break;
+                }
+                else if (player.Life <= 0)
+                {
+                    Console.WriteLine($"{randomMob.Name} won the fight! better heal up and get some better gear!");
+                    Console.ReadLine();
+                    player.Life = 0;
+                    BackToMenu(player);
                 }
             }
-        }
-
-        private void DrawSkills(Player player)
-        {
-            Console.WriteLine($"Skill 1: {player.skillNr1}");
-            Console.WriteLine($"Skill 2: {player.skillNr2}");
-            Console.WriteLine($"Skill 3: {player.skillNr3}");
-            Console.WriteLine($"Skill 4: {player.Potion}");
-        }
-
-        private void ChooseSkill(Player player)
-        {
-            userInput = Console.ReadLine();
-            switch (userInput)
-            {
-                case "1":
-                    player.mySkills = Player.PlayerSkills.Skill1;
-                    break;
-                case "2":
-                    player.mySkills = Player.PlayerSkills.Skill2;
-                    break;
-                case "3":
-                    player.mySkills = Player.PlayerSkills.Skill3;
-                    break;
-                case "4":
-                    player.healPlayer = Player.PlayerHeal.SmallPotion;
-                    Console.WriteLine($"{player.Name} healed for {player.Heal}");
-                    break;
-            }
-        }
-
-        public void FightMob(Player player)
-        {
-            Random rand = new Random();
-            Bosses randomMob = new Bosses(randomNames[rand.Next(0, randomNames.Length)], player.MyQuest.QuestStory + 5 * 3, player.MyQuest.QuestStory + 3 * 3);
-
-
         }
     }
 }

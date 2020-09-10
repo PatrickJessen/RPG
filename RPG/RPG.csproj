@@ -60,6 +60,7 @@
     <Compile Include="Druid.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="ExpSystem.cs" />
+    <Compile Include="FightMethods.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="GUIFunctions.cs" />
     <Compile Include="ItemSystem\Amulets.cs" />

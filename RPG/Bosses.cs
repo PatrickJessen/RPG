@@ -11,15 +11,16 @@ namespace RPG
     {
         Random rand = new Random();
 
-        public Bosses(string name, int dmg, int life)
+        public Bosses(string name, int dmg, int life, int speed)
         {
             Name = name;
             Dmg = RandomDamage(dmg);
             Life = life;
+            Speed = speed;
         }
 
 
-        public int RandomDamage(int dmg)
+        private int RandomDamage(int dmg)
         {
             dmg = rand.Next(5 + dmg, 40 + dmg);
             return dmg;

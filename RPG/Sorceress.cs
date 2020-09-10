@@ -8,7 +8,6 @@ namespace RPG
 {
     class Sorceress : Player
     {
-        public int FasterCastRate { get; set; }
         public int Fireskills { get; set; }
         public int Lightningskills { get; set; }
         public int ColdSkills { get; set; }
@@ -45,8 +44,6 @@ namespace RPG
             set { drinkPotion = value; }
         }
 
-
-        //PlayerSkills mySkills = new PlayerSkills();
 
         public Sorceress() : base()
         {
@@ -109,7 +106,7 @@ namespace RPG
 
         public override double HealPlayer()
         {
-            if (healPlayer == PlayerHeal.SmallPotion)
+            if (mySkills == PlayerSkills.Potion)
             {
                 return DrinkPotion;
             }

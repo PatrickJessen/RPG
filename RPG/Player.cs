@@ -15,10 +15,7 @@ namespace RPG
             Skill1,
             Skill2,
             Skill3,
-        }
-        public enum PlayerHeal
-        {
-            SmallPotion
+            Potion
         }
         public int Strength { get; set; }
         public int Dexterity { get; set; }
@@ -26,6 +23,7 @@ namespace RPG
         public int Energy { get; set; }
         public double Life { get; set; }
         public double Hitrate { get; set; }
+        public int FasterCastRate { get; set; }
         public double Damage { get; set; }
         public string Name { get; set;  }
         public int Level { get; set; }
@@ -40,7 +38,6 @@ namespace RPG
         public string Potion { get; set; }
 
         public PlayerSkills mySkills { get; set; }
-        public PlayerHeal healPlayer { get; set; }
 
 
         public Quest myQuest = new Quest();
