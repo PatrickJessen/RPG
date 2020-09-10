@@ -25,6 +25,11 @@ namespace RPG
             UpdateStats();
         }
 
+        public override double DealDamage()
+        {
+            throw new NotImplementedException();
+        }
+
         public override void LevelUp()
         {
             Strength += (Level % 2 == 1 ? 2 : 1);

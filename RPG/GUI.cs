@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RPG.ItemSystem;
 using System.Collections.ObjectModel;
+using System.Media;
 
 namespace RPG
 {
@@ -184,6 +185,8 @@ namespace RPG
 
         char key = 'b';
         string userInput;
+
+        bool turn = true;
         public void StartStory()
         {
             AddBossesToList();
@@ -468,6 +471,8 @@ namespace RPG
 
                 temp = player.Damage;
                 randomMob.Life -= temp;
+                DrawSkills(player);
+                ChooseSkill(player);
                 Console.WriteLine($"{player.Name} hit {randomMob.Name} for {temp}");
                 Console.WriteLine($"{randomMob.Name} life is currently at: {randomMob.Life}");
 
@@ -489,6 +494,38 @@ namespace RPG
                     break;
                 }
             }
+        }
+
+        private void DrawSkills(Player player)
+        {
+            Console.WriteLine($"Skill 1: {Player.PlayerSkills.Skill1}");
+            Console.WriteLine($"Skill 2: {Player.PlayerSkills.Skill2}");
+            Console.WriteLine($"Skill 3: {Player.PlayerSkills.Skill3}");
+        }
+
+        private void ChooseSkill(Player player)
+        {
+            userInput = Console.ReadLine();
+            switch (userInput)
+            {
+                case "1":
+                    player.mySkills = Player.PlayerSkills.Skill1;
+                    break;
+                case "2":
+                    player.mySkills = Player.PlayerSkills.Skill2;
+                    break;
+                case "3":
+                    player.mySkills = Player.PlayerSkills.Skill3;
+                    break;
+            }
+        }
+
+        public void FightMob(Player player)
+        {
+            Random rand = new Random();
+            Bosses randomMob = new Bosses(randomNames[rand.Next(0, randomNames.Length)], player.MyQuest.QuestStory + 5 * 3, player.MyQuest.QuestStory + 3 * 3);
+
+
         }
     }
 }

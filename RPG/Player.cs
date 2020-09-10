@@ -10,6 +10,12 @@ namespace RPG
 {
     abstract class Player
     {
+        public enum PlayerSkills
+        {
+            Skill1,
+            Skill2,
+            Skill3
+        }
         public int Strength { get; set; }
         public int Dexterity { get; set; }
         public int Vitality { get; set; }
@@ -24,7 +30,7 @@ namespace RPG
         public int Gold { get; set; }
         public double Defense { get; set; }
 
-
+        public PlayerSkills mySkills { get; set; }
 
 
         public Quest myQuest = new Quest();
@@ -53,6 +59,8 @@ namespace RPG
         public abstract void LevelUp();
             
         public abstract void UpdateStats();
+
+        public abstract double DealDamage();
             
         public string PrintStats()
         {
