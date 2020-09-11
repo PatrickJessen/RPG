@@ -62,6 +62,7 @@
     <Compile Include="ExpSystem.cs" />
     <Compile Include="FightMethods.cs" />
     <Compile Include="GUI.cs" />
+    <Compile Include="GUI2.cs" />
     <Compile Include="GUIFunctions.cs" />
     <Compile Include="ItemSystem\Amulets.cs" />
     <Compile Include="ItemSystem\Armor.cs" />

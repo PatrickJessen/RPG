@@ -35,6 +35,9 @@ namespace RPG
         public string skillNr1 { get; set; }
         public string skillNr2 { get; set; }
         public string skillNr3 { get; set; }
+        public double Skill1 { get; set; }
+        public double Skill2 { get; set; }
+        public double Skill3 { get; set; }
         public string Potion { get; set; }
 
         public PlayerSkills mySkills { get; set; }

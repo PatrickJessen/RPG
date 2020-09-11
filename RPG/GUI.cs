@@ -309,11 +309,15 @@ namespace RPG
                 case "2":
                     Console.Clear();
                     Console.WriteLine("Press any key to start the fight!");
-                    //Story(player);
+                    Story(player);
                     break;
                 case "3":
                     Console.Clear();
                     Console.WriteLine(player.PrintStats());
+                    Console.WriteLine("Skill Damage");
+                    Console.WriteLine($"{player.skillNr1}: {player.Skill1}");
+                    Console.WriteLine($"{player.skillNr2}: {player.Skill2}");
+                    Console.WriteLine($"{player.skillNr3}: {player.Skill3}");
                     Console.WriteLine("Press b to get back to menu!");
                     Console.ReadKey();
                     BackToMenu(player);
@@ -448,6 +452,7 @@ namespace RPG
             return 0;
         }
 
+
         //private void FightRandomMob(Player player)
         //{
         //    Random rand = new Random();
@@ -497,6 +502,7 @@ namespace RPG
         //    }
         //}
 
+
         public void FightMob(Player player)
         {
             Random rand = new Random();
@@ -525,9 +531,8 @@ namespace RPG
                     camp.PrintLootStat(playerInventory);
                     player.ExpToLevelUp = exp.ExpNeededForLevel(player);
                     player.Experience += player.Level * player.MyQuest.QuestStory * 3;
-                    exp.LevelingUp(player);
                     Console.WriteLine($"{player.Name} gained {player.Experience} exp");
-                    Console.ReadLine();
+                    exp.LevelingUp(player);
                     BackToMenu(player);
                 }
                 else if (player.Life <= 0)

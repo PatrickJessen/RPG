@@ -8,33 +8,6 @@ namespace RPG
 {
     class Sorceress : Player
     {
-        public int Fireskills { get; set; }
-        public int Lightningskills { get; set; }
-        public int ColdSkills { get; set; }
-
-        private double fireball;
-
-        public double Fireball
-        {
-            get { return fireball = FasterCastRate * Level + Fireskills + Energy; }
-            set { fireball = value; }
-        }
-
-        private double lightning;
-
-        public double Lightning
-        {
-            get { return lightning = FasterCastRate * Level + Lightningskills + Energy; }
-            set { lightning = value; }
-        }
-
-        private double frostbolt;
-
-        public double Frostbolt
-        {
-            get { return frostbolt = FasterCastRate * Level + ColdSkills + Energy; }
-            set { frostbolt = value; }
-        }
 
         private double drinkPotion;
 
@@ -43,7 +16,6 @@ namespace RPG
             get { return Life += Vitality / 2; }
             set { drinkPotion = value; }
         }
-
 
         public Sorceress() : base()
         {
@@ -57,9 +29,9 @@ namespace RPG
             Gold = 0;
             MyQuest.QuestStory = 1;
             FasterCastRate = 3;
-            Fireskills = 1;
-            Lightningskills = 1;
-            ColdSkills = 1;
+            Skill1 = FasterCastRate * Level + Skill1 + Energy + Damage;
+            Skill2 = FasterCastRate * Level + Skill2 + Energy;
+            Skill3 = FasterCastRate * Level + Skill3 + Energy;
 
             skillNr1 = "Fireball";
             skillNr2 = "Lightning";
@@ -70,7 +42,6 @@ namespace RPG
 
             UpdateStats();
         }
-
         public override void LevelUp()
         {
             Strength += 1;
@@ -95,11 +66,11 @@ namespace RPG
             switch (mySkills)
             {
                 case PlayerSkills.Skill1:
-                    return Fireball;
+                    return Skill1;
                 case PlayerSkills.Skill2:
-                    return Lightning;
+                    return Skill2;
                 case PlayerSkills.Skill3:
-                    return Frostbolt;
+                    return Skill3;
             }
             return 0;
         }

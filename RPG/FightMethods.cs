@@ -66,8 +66,8 @@ namespace RPG
                     return $"{player.Name} hit {boss.Name} for {player.Damage}";
                 case "4":
                     player.mySkills = Player.PlayerSkills.Potion;
-                    player.Life += player.Heal;
-                    return $"{player.Name} healed for {player.Life += player.Heal}";
+                    player.Vitality += 15;
+                    return $"{player.Name} healed for {player.Vitality += 15}";
             }
             return null;
         }
